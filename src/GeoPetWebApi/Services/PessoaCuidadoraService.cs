@@ -2,6 +2,8 @@
 using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.Controllers.inputs;
 using projetoFinal.Controllers;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace projetoFinal.Services
 {
@@ -29,11 +31,12 @@ namespace projetoFinal.Services
                 return output;
             }
 
+
             // tudo ok? cria uma pessoa cuidadora do jeito que o bd espera 
             var model = new PessoaCuidadoraModel() {
                 Nome = pessoaCuidadora.Nome,
                 Email = pessoaCuidadora.Email,
-                Senha = pessoaCuidadora.Senha,
+                Senha = GenerateHash(pessoaCuidadora.Senha),
                 CEP = pessoaCuidadora.CEP,
                 Status = true,
             };
@@ -48,6 +51,13 @@ namespace projetoFinal.Services
                 return true;
             }
             return false;
+        }
+
+        public string GenerateHash(string password) {
+            var md5 = MD5.Create();
+            byte[] bytes = Encoding.ASCII.GetBytes(password);
+            byte[] hash = md5.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
         }
 
         public IEnumerable<PessoaCuidadoraModel>? GetAll() {
