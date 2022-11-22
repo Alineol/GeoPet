@@ -3,6 +3,7 @@ using projetoFinal.Services;
 using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.Controllers.inputs;
 using GeoPetWebApi.Controllers.inputs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace projetoFinal.Controllers;
 
@@ -37,6 +38,7 @@ public class PessoaCuidadoraController : ControllerBase
     ///<response code="404">retorna um objeto com uma mensagem de erro </response>
     [HttpGet(Name = "GetAll")]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
+    [Authorize]
     public IActionResult GetAll() {
         var list = _service.GetAll();
         if (list == null) return StatusCode(404, new ResultRowstOuput() {
