@@ -17,9 +17,9 @@ namespace projetoFinal.db.Repository
             
         }
 
-        public PessoaCuidadoraModel? GetByCPF(string CPF)
+        public PessoaCuidadoraModel? GetByEmail(string email)
         {
-            var result =  _context.PessoasCuidadoras.Where(p => p.CPF == CPF).FirstOrDefault();
+            var result =  _context.PessoasCuidadoras.Where(p => p.Email == email).FirstOrDefault();
             return result;
         }
     }

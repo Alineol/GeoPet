@@ -13,11 +13,7 @@ namespace projetoFinal.Controllers.inputs
         [Column("SENHA", TypeName = "varchar(10)")]
         [MinLength (6)]
         [MaxLength(10)]
-        public string senha { get; set; }
-        [Column(TypeName = "varchar(11)")]
-        [MinLength(11)]
-        [MaxLength(11)]
-        public string CPF { get; set; }
+        public string Senha { get; set; }
         [Column(TypeName = "varchar(8)")]
         [MinLength(8)]
         [MaxLength(8)]

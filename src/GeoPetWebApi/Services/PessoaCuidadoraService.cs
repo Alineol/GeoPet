@@ -17,9 +17,9 @@ namespace projetoFinal.Services
         public async Task<ResultRowstOuput> CreatePessoaCuidadora(PessoaCuidadoraInput pessoaCuidadora) {
             var output = new ResultRowstOuput();
             // confere se tem alguém já cadastrado com o mesmo cpf
-            var check = _repository.GetByCPF(pessoaCuidadora.CPF);
+            var check = _repository.GetByEmail(pessoaCuidadora.Email);
             if (check != null) {
-                output.ErrorMessage = "CPf Já cadastrado";
+                output.ErrorMessage = "Email Já cadastrado";
                 return output;
             };
             // confere o cep
@@ -33,8 +33,7 @@ namespace projetoFinal.Services
             var model = new PessoaCuidadoraModel() {
                 Nome = pessoaCuidadora.Nome,
                 Email = pessoaCuidadora.Email,
-                senha = pessoaCuidadora.senha,
-                CPF = pessoaCuidadora.CPF,
+                Senha = pessoaCuidadora.Senha,
                 CEP = pessoaCuidadora.CEP,
                 Status = true,
             };
