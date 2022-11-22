@@ -4,6 +4,7 @@ using projetoFinal.Controllers.inputs;
 using projetoFinal.Controllers;
 using System.Security.Cryptography;
 using System.Text;
+using GeoPetWebApi.Controllers.inputs;
 
 namespace projetoFinal.Services
 {
@@ -41,6 +42,7 @@ namespace projetoFinal.Services
                 Status = true,
             };
             output.RowsAffected = _repository.CreatePessoaCuidadora(model);
+            output.SucessMessage = $"Created Client with id {model.Id}";
             return output;
         } 
 
@@ -64,5 +66,17 @@ namespace projetoFinal.Services
             var list = _repository.GetAll();
             return list;
         }
+
+        public ResultRowstOuput Login(LoginInput data) { 
+            var outupt = new ResultRowstOuput();
+            var has = GenerateHash(data.Senha);
+            var check = _repository.login(has, data.Email);
+            if (check != null) {
+                outupt.SucessMessage = "Sucess";
+                return outupt;
+            }
+            outupt.ErrorMessage = "login failed, email or password incorrect!";
+            return outupt ;
+         }
     };
 };

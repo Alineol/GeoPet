@@ -7,7 +7,7 @@ namespace projetoFinal.db.Models.PessoaCuidadora;
 
 public class PessoaCuidadoraModel: PessoaCuidadoraInput{
     public int Id {get; set;}
-    public ICollection<PetModel> Pets { get; set;}
+    public ICollection<PetModel> Pets { get; set; }
     [Column("STATUS")]
     public bool Status { get; set; }
     [MaxLength(50)]

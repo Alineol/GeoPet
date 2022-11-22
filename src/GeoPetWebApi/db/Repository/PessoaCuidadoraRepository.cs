@@ -36,6 +36,11 @@ namespace projetoFinal.db.Repository
             });
             return result;
         }
+
+        public PessoaCuidadoraModel? login(string password, string email) {
+            var result = _context.PessoasCuidadoras.Where(p => p.Email.Equals(email) & p.Senha.Equals(password)).FirstOrDefault();
+            return result;
+        }
         
     }
 
