@@ -5,6 +5,7 @@ using projetoFinal.Controllers;
 using System.Security.Cryptography;
 using System.Text;
 using GeoPetWebApi.Controllers.inputs;
+using GeoPetWebApi.JWT;
 
 namespace projetoFinal.Services
 {
@@ -72,11 +73,13 @@ namespace projetoFinal.Services
             var has = GenerateHash(data.Senha);
             var check = _repository.login(has, data.Email);
             if (check != null) {
-                outupt.SucessMessage = "Sucess";
+                outupt.SucessMessage = new TokenGenerator().Generate();
                 return outupt;
             }
             outupt.ErrorMessage = "login failed, email or password incorrect!";
             return outupt ;
-         }
+         
+        }
+
     };
 };
