@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using projetoFinal.Services;
 using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.Controllers.inputs;
+using GeoPetWebApi.Controllers.inputs;
 
 namespace projetoFinal.Controllers;
 
@@ -32,9 +33,9 @@ public class PessoaCuidadoraController : ControllerBase
 
     }
     ///<summary>Retorna todas as pessoas cuidadoras cadastradas no bd</summary>
-    [HttpGet(Name = "GetAll")]
     ///<response code="200"> retorna uma lista de pesssoas cuidadoras</response>
     ///<response code="404">retorna um objeto com uma mensagem de erro </response>
+    [HttpGet(Name = "GetAll")]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
     public IActionResult GetAll() {
         var list = _service.GetAll();
@@ -43,4 +44,5 @@ public class PessoaCuidadoraController : ControllerBase
         });
         return Ok(list);
     }
+    
 }
