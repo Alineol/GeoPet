@@ -49,5 +49,10 @@ namespace projetoFinal.Services
             }
             return false;
         }
+
+        public IEnumerable<PessoaCuidadoraModel>? GetAll() {
+            var list = _repository.GetAll();
+            return list;
+        }
     };
 };

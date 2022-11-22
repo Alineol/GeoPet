@@ -31,4 +31,16 @@ public class PessoaCuidadoraController : ControllerBase
         return StatusCode(400,result);
 
     }
+    ///<summary>Retorna todas as pessoas cuidadoras cadastradas no bd</summary>
+    [HttpGet(Name = "GetAll")]
+    ///<response code="200"> retorna uma lista de pesssoas cuidadoras</response>
+    ///<response code="404">retorna um objeto com uma mensagem de erro </response>
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
+    public IActionResult GetAll() {
+        var list = _service.GetAll();
+        if (list == null) return StatusCode(404, new ResultRowstOuput() {
+            ErrorMessage = "Não há pessoas cadastradas",
+        });
+        return Ok(list);
+    }
 }
