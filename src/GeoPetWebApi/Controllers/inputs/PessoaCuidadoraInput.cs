@@ -10,10 +10,10 @@ namespace projetoFinal.Controllers.inputs
         public string Nome { get; set; }
         [Column("EMAIL")]
         public string Email { get; set; }
-        [Column("SENHA", TypeName = "varchar(10)")]
+        [Column("SENHA", TypeName = "varchar(50)")]
         [MinLength (6)]
         [MaxLength(10)]
-        public string Senha { get; set; }
+        public virtual string Senha { get; set; }
         [Column(TypeName = "varchar(8)")]
         [MinLength(8)]
         [MaxLength(8)]
