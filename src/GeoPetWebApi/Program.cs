@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using projetoFinal.db;
 using projetoFinal.db.Repository;
 using projetoFinal.Services;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +25,26 @@ builder.Services.AddSwaggerGen(options => {
     string file = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     string path = Path.Combine(AppContext.BaseDirectory, file);
     options.IncludeXmlComments(path);
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme() {
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+    });
+});
+builder.Services.AddAuthentication(options => {
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options => {
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters() {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("2d74025e7bcf058897d8daaa99ae99b5"))
+    };
 });
 
 using (var db = new Context()) {
@@ -30,7 +53,6 @@ using (var db = new Context()) {
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -39,7 +61,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
 
 app.MapControllers();
 
