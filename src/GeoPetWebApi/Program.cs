@@ -4,10 +4,14 @@ using Microsoft.OpenApi.Models;
 using projetoFinal.db;
 using projetoFinal.db.Repository;
 using projetoFinal.Services;
+using System.Diagnostics.Metrics;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -29,16 +33,34 @@ builder.Services.AddSwaggerGen(options => {
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
-        Scheme = JwtBearerDefaults.AuthenticationScheme,
+        Scheme = "Bearer",
+        //BearerFormat = "JWT",
+        Description = @"JWT Authorization header using the Bearer scheme.
+                   \r\n\r\n Enter 'Bearer'[space] and then your token in the text input below.
+                    \r\n\r\nExample: \""Bearer 12345abcdef\""",
     });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                          {
+                              Reference = new OpenApiReference
+                              {
+                                  Type = ReferenceType.SecurityScheme,
+                                  Id = "Bearer"
+                              }
+                          },
+                         new string[] {}
+                    }
+                });
 });
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options => {
-    options.SaveToken = true;
     options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters() {
         ValidateIssuer = false,
         ValidateAudience = false,
@@ -60,7 +82,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 
 app.UseAuthorization();
