@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using  projetoFinal.db.Models;
 using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.db.Models.Pets;
 

@@ -1,0 +1,57 @@
+using projetoFinal.db.Repository;
+using projetoFinal.db.Models.PessoaCuidadora;
+using projetoFinal.Controllers.inputs;
+using projetoFinal.Controllers;
+using System.Security.Cryptography;
+using System.Text;
+using GeoPetWebApi.Controllers.inputs;
+using GeoPetWebApi.JWT;
+using projetoFinal.db.Models.Pets;
+
+namespace projetoFinal.Services
+{
+    public class PetService {
+        private readonly PetRepository _repository;
+        private readonly PessoaCuidadoraRepository _pessoaCuidadora;
+
+        public PetService(PetRepository repository,PessoaCuidadoraRepository pessoaCuidadoraRepository) {
+            _repository = repository;
+            _pessoaCuidadora = pessoaCuidadoraRepository;
+        }
+
+        public async Task<ResultRowstOuput> CreatePet(PetInput pet) {
+            var output = new ResultRowstOuput();
+
+            //verifica se o email corresponde a um usuário válido
+            var pessoaCuidadora = _pessoaCuidadora.GetByEmail(pet.PessoaCuidadora);
+            if(pessoaCuidadora == null || !pessoaCuidadora.Status){
+                output.ErrorMessage = "Email não corresponde a um usuário válido";
+                return output;
+            }        
+
+
+            // tudo ok? cria um pet do jeito que o bd espera 
+            var model = new PetModel() {
+                Nome = pet.Nome,
+                Peso = pet.Peso,
+                PessoaCuidadora = pessoaCuidadora,
+                HashLocalizacao = GenerateHash(pet.HashLocalizacao),
+                Idade = pet.Idade,
+                Raca = pet.Raca,
+                Porte = pet.Porte,
+                Status = true,
+            };
+            output.RowsAffected = _repository.CreatePet(model);
+            output.SucessMessage = $"Created Pet with id {model.Id}";
+            return output;
+        } 
+
+        public string GenerateHash(string password) {
+            var md5 = MD5.Create();
+            byte[] bytes = Encoding.ASCII.GetBytes(password);
+            byte[] hash = md5.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
+        }
+
+    };
+};
