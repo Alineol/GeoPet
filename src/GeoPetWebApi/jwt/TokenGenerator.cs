@@ -4,11 +4,18 @@ using System.Text;
 
 namespace GeoPetWebApi.JWT {
     public class TokenGenerator {
+        private readonly IConfiguration _configuration;
+        public TokenGenerator(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public string Generate() {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor() {
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"],
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.ASCII.GetBytes("2d74025e7bcf058897d8daaa99ae99b5")),
+                    new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]!)),
                     SecurityAlgorithms.HmacSha256Signature),
                 Expires = DateTime.Now.AddDays(2),
             };

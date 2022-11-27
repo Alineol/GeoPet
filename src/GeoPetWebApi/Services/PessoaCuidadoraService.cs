@@ -12,10 +12,12 @@ namespace projetoFinal.Services
     public class PessoaCuidadoraService {
         private readonly PessoaCuidadoraRepository _repository;
         private readonly HttpClient _client;
+        private readonly IConfiguration _config;
 
-        public PessoaCuidadoraService(PessoaCuidadoraRepository repository, HttpClient client) {
+        public PessoaCuidadoraService(PessoaCuidadoraRepository repository, HttpClient client, IConfiguration config) {
             _repository = repository;
             _client = client;
+            _config = config;
         }
 
         public async Task<ResultRowstOuput> CreatePessoaCuidadora(PessoaCuidadoraInput pessoaCuidadora) {
@@ -73,7 +75,7 @@ namespace projetoFinal.Services
             var has = GenerateHash(data.Senha);
             var check = _repository.login(has, data.Email);
             if (check != null) {
-                outupt.SucessMessage = new TokenGenerator().Generate();
+                outupt.SucessMessage = new TokenGenerator(_config).Generate();
                 return outupt;
             }
             outupt.ErrorMessage = "login failed, email or password incorrect!";
