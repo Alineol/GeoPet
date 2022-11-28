@@ -46,7 +46,10 @@ namespace projetoFinal.db.Repository
         public int Update(int id, PetInput dados) {
             var pet = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
 
-            if (pet == null) return 0;
+            // Aqui pego a pessoa cuidadora pelo id para conseguir procurá-la no banco.
+            var pessoaCuidadora = _context.PessoasCuidadoras.Where(p => p.Id == dados.PessoaCuidadora).FirstOrDefault();
+            
+            if (pet == null || pessoaCuidadora == null) return 0;
 
             pet.Nome = dados.Nome;
             pet.Peso = dados.Peso;
@@ -54,7 +57,7 @@ namespace projetoFinal.db.Repository
             pet.Raca = dados.Raca;
             pet.Porte = dados.Porte;
             pet.HashLocalizacao = dados.HashLocalizacao;
-            // pet.PessoaCuidadora = dados.PessoaCuidadora;
+            pet.PessoaCuidadora = pessoaCuidadora;
 
             return _context.SaveChanges();
         }
@@ -63,7 +66,7 @@ namespace projetoFinal.db.Repository
             var pet = GetById(id);
 
             if (pet == null) return 0;
-            
+
             pet.Status = !pet.Status;
 
             return _context.SaveChanges();
