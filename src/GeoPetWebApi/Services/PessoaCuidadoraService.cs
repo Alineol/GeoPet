@@ -116,11 +116,13 @@ namespace projetoFinal.Services
 
             var newStatus = _repository.UpdateStatus(email);
 
-            if (newStatus == 0)
-            {
-              output.SucessMessage = "Pessoa Cuidadora desativada.";
-            }
-            output.SucessMessage = "Pessoa Cuidadora ativada.";
+            output.RowsAffected = newStatus;
+
+            var person = _repository.GetByEmail(email);
+            
+            if (person!.Status) output.SucessMessage = "Pessoa cuidadora ativada.";
+
+            else output.SucessMessage = "Pessoa cuidadora desativada.";
 
             return output;
         }

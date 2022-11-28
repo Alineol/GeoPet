@@ -60,6 +60,8 @@ namespace projetoFinal.db.Repository
         {
             var person = _context.PessoasCuidadoras.Where(p => p.Email == email).FirstOrDefault();
 
+            if (person == null) return 0;
+
             person!.Status = !person.Status;
 
             return _context.SaveChanges();

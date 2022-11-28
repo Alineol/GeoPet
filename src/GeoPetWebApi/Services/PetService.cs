@@ -29,7 +29,6 @@ namespace projetoFinal.Services
                 return output;
             }        
 
-
             // tudo ok? cria um pet do jeito que o bd espera 
             var model = new PetModel() {
                 Nome = pet.Nome,

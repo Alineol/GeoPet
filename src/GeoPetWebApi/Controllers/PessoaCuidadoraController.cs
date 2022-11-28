@@ -27,6 +27,7 @@ public class PessoaCuidadoraController : ControllerBase
     [HttpPost(Name = "CreatePessoaCuidadora")]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput) )]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ResultRowstOuput))]
+    [AllowAnonymous]
     public async Task<IActionResult> CreatePessoaCuidadora(PessoaCuidadoraInput pessoaCuidadora)
     {
         var result = await _service.CreatePessoaCuidadora(pessoaCuidadora);
