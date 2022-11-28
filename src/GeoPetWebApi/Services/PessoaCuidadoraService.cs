@@ -98,14 +98,29 @@ namespace projetoFinal.Services
 
             var upPerson = _repository.Update(email, model);
 
-            if (!upPerson)
+            if (upPerson == 0)
             {
                 output.ErrorMessage = "Erro ao atualizar cadastro.";
                 return output;
             }
 
-            output.RowsAffected = _repository.CreatePessoaCuidadora(model);
+            output.RowsAffected = upPerson;
             output.SucessMessage = "Pessoa Cuidadora atualizada.";
+
+            return output;
+        }
+
+        public ResultRowstOuput UpdateStatusPessoaCuidadora(string email)
+        {
+            var output = new ResultRowstOuput();
+
+            var newStatus = _repository.UpdateStatus(email);
+
+            if (newStatus == 0)
+            {
+              output.SucessMessage = "Pessoa Cuidadora desativada.";
+            }
+            output.SucessMessage = "Pessoa Cuidadora ativada.";
 
             return output;
         }

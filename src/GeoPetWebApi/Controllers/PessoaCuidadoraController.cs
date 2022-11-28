@@ -54,21 +54,19 @@ public class PessoaCuidadoraController : ControllerBase
     ///<response code="404"> Usuário não autorizado de realizar a atualização </response>
     ///<response code="204"> Atualiza com sucesso os dados </response>
     [HttpPut(Name = "UpdatePessoaCuidadora")]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
     // Só a propria pessoa poderá atualizar seus dados
     [Authorize]
     public IActionResult UpdatePessoaCuidadora(string email, string senha, [FromBody]PessoaCuidadoraInput inputPessoaCuidadora)
     {
-        if(inputPessoaCuidadora == null) return StatusCode(400, "Dados inválidos");
-
-        // User.Claim precisa ficar na controlar porque vem da controllerBase
+        if(inputPessoaCuidadora == null) return StatusCode(400, new ResultRowstOuput() {
+            ErrorMessage = "Dados inválidos",
+        });
         
-        var emailAutorizado = User.Claims.Where(em => em.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
-        var senhaAutorizada = User.Claims.Where(s => s.Type == "senha").FirstOrDefault()?.Value;
-
-        if(email != emailAutorizado || senha != senhaAutorizada) return StatusCode(404, "Email ou senha inválida");
+        if(!VerifyClaimsEmailAndSenha(email, senha)) return StatusCode(400, new ResultRowstOuput() {
+            ErrorMessage = "Email ou senha inválida",
+        });
 
         var result = _service.UpdatePessoaCuidadora(email, inputPessoaCuidadora);
 
@@ -79,5 +77,31 @@ public class PessoaCuidadoraController : ControllerBase
         return StatusCode(400,result);
         
         // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsInNlbmhhIjoiMTIzNDU2NyIsIm5iZiI6MTY2OTYwMzE0NSwiZXhwIjoxNjY5Nzc1OTQ1LCJpYXQiOjE2Njk2MDMxNDUsImlzcyI6IkdydXBvQWxpbmVPbGl2ZWlyYUVkdWFyZG9Tb3V6YU1hcmNlbGxlTW9udGVpcm8iLCJhdWQiOiJBdmFsaWFkb3Jlc0FjZWxlcmFjYW9DU2hhcnBUcnliZSJ9.lQj02t_KadDwOTKBL8IrQRUnL6iDXGZQiDFNuEesISo
+    }
+
+    ///<summary>Atualiza status da pessoa cuidadora</summary>
+    ///<response code="200"> Atualiza com sucesso o status para ativado/desativado </response>
+    [HttpPatch(Name = "StatusPessoaCuidadora")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
+    [Authorize]
+    public IActionResult UpdateStatusPessoaCuidadora(string email, string senha)
+    {
+        if(!VerifyClaimsEmailAndSenha(email, senha)) return StatusCode(400, new ResultRowstOuput() {
+            ErrorMessage = "Email ou senha inválida",
+        });
+
+        var result = _service.UpdateStatusPessoaCuidadora(email);
+        
+        return StatusCode(200, result);
+    }
+
+    // User.Claim precisa ficar na controlar porque vem da controllerBase
+    public bool VerifyClaimsEmailAndSenha(string email, string senha)
+    {
+        var emailAutorizado = User.Claims.Where(em => em.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
+        var senhaAutorizada = User.Claims.Where(s => s.Type == "senha").FirstOrDefault()?.Value;
+
+        return email == emailAutorizado && senha == senhaAutorizada;
     }
 }
