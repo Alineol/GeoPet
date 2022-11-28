@@ -4,6 +4,8 @@ using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.Controllers.inputs;
 using GeoPetWebApi.Controllers.inputs;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+
 
 namespace projetoFinal.Controllers;
 
@@ -42,9 +44,41 @@ public class PessoaCuidadoraController : ControllerBase
     public IActionResult GetAll() {
         var list = _service.GetAll();
         if (list == null) return StatusCode(404, new ResultRowstOuput() {
-            ErrorMessage = "N�o h� pessoas cadastradas",
+            ErrorMessage = "N�o h� pessoas cadastradas",
         });
         return Ok(list);
     }
-    
+
+    ///<summary>Atualiza dados da pessoa cuidadora</summary>
+    ///<response code="400"> Encontra um problema na atualização</response>
+    ///<response code="404"> Usuário não autorizado de realizar a atualização </response>
+    ///<response code="204"> Atualiza com sucesso os dados </response>
+    [HttpPut(Name = "UpdatePessoaCuidadora")]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
+    // Só a propria pessoa poderá atualizar seus dados
+    [Authorize]
+    public IActionResult UpdatePessoaCuidadora(string email, string senha, [FromBody]PessoaCuidadoraInput inputPessoaCuidadora)
+    {
+        if(inputPessoaCuidadora == null) return StatusCode(400, "Dados inválidos");
+
+        // User.Claim precisa ficar na controlar porque vem da controllerBase
+        // https://stackoverflow.com/questions/60444977/how-to-get-identity-user-from-his-authentication-jwt-token-in-net-core-api
+        // https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/blob/dev/src/System.IdentityModel.Tokens.Jwt/ClaimTypeMapping.cs#L54
+        var emailAutorizado = User.Claims.Where(em => em.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
+        var senhaAutorizada = User.Claims.Where(s => s.Type == "senha").FirstOrDefault()?.Value;
+
+        if(email != emailAutorizado || senha != senhaAutorizada) return StatusCode(404, "Email ou senha inválida");
+
+        var result = _service.UpdatePessoaCuidadora(email, inputPessoaCuidadora);
+
+        if (result.ErrorMessage == null) 
+        { 
+            return StatusCode(200, result);
+        }
+        return StatusCode(400,result);
+        
+        // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsInNlbmhhIjoiMTIzNDU2NyIsIm5iZiI6MTY2OTYwMzE0NSwiZXhwIjoxNjY5Nzc1OTQ1LCJpYXQiOjE2Njk2MDMxNDUsImlzcyI6IkdydXBvQWxpbmVPbGl2ZWlyYUVkdWFyZG9Tb3V6YU1hcmNlbGxlTW9udGVpcm8iLCJhdWQiOiJBdmFsaWFkb3Jlc0FjZWxlcmFjYW9DU2hhcnBUcnliZSJ9.lQj02t_KadDwOTKBL8IrQRUnL6iDXGZQiDFNuEesISo
+    }
 }

@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using GeoPetWebApi.Controllers.inputs;
 using GeoPetWebApi.JWT;
+using System.Security.Claims;
 
 namespace projetoFinal.Services
 {
@@ -75,12 +76,38 @@ namespace projetoFinal.Services
             var has = GenerateHash(data.Senha);
             var check = _repository.login(has, data.Email);
             if (check != null) {
-                outupt.SucessMessage = new TokenGenerator(_config).Generate();
+                outupt.SucessMessage = new TokenGenerator(_config).Generate(data);
                 return outupt;
             }
             outupt.ErrorMessage = "login failed, email or password incorrect!";
             return outupt ;
          
+        }
+
+        public ResultRowstOuput UpdatePessoaCuidadora(string email, PessoaCuidadoraInput upPessoaCuidadora)
+        {
+            var output = new ResultRowstOuput();
+            // utilizar o output para padronizar
+            var model = new PessoaCuidadoraModel() {
+                Nome = upPessoaCuidadora.Nome,
+                Email = upPessoaCuidadora.Email,
+                Senha = GenerateHash(upPessoaCuidadora.Senha),
+                CEP = upPessoaCuidadora.CEP,
+                Status = true,
+            };
+
+            var upPerson = _repository.Update(email, model);
+
+            if (!upPerson)
+            {
+                output.ErrorMessage = "Erro ao atualizar cadastro.";
+                return output;
+            }
+
+            output.RowsAffected = _repository.CreatePessoaCuidadora(model);
+            output.SucessMessage = "Pessoa Cuidadora atualizada.";
+
+            return output;
         }
 
     };
