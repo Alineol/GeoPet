@@ -33,7 +33,7 @@ namespace projetoFinal.Controllers;
         ///<summary>Rota para buscar todos os pets cadastrados</summary>
         ///<response code="200"> Retorna uma lista de pets </response>
         ///<response code="404">retorna um objeto com uma mensagem de erro </response>
-        [HttpGet(Name = "GetAll")]
+        [HttpGet(Name = "GetAllPet")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
         [Authorize]

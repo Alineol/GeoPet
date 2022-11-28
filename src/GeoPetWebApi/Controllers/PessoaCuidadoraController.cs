@@ -38,7 +38,7 @@ public class PessoaCuidadoraController : ControllerBase
     ///<summary>Retorna todas as pessoas cuidadoras cadastradas no bd</summary>
     ///<response code="200"> retorna uma lista de pesssoas cuidadoras</response>
     ///<response code="404">retorna um objeto com uma mensagem de erro </response>
-    [HttpGet(Name = "GetAll")]
+    [HttpGet(Name = "GetAllPessoaCuidadora")]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
     [Authorize]
     public IActionResult GetAll() {
@@ -92,7 +92,7 @@ public class PessoaCuidadoraController : ControllerBase
         });
 
         var result = _service.UpdateStatusPessoaCuidadora(email);
-        
+
         return StatusCode(200, result);
     }
 

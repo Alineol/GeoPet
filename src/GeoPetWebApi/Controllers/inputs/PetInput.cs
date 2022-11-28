@@ -9,7 +9,7 @@ namespace projetoFinal.Controllers.inputs
         public string Nome { get; set; }
         [Column("PESO")]
         public decimal Peso { get; set; }
-        public virtual int PessoaCuidadora { get; set; }
+        public virtual string PessoaCuidadora { get; set; }
         [Column("HASH_LOCALIZACAO")]
         public string HashLocalizacao { get; set; }
         [Column("IDADE")]

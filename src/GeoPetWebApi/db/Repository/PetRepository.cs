@@ -46,8 +46,8 @@ namespace projetoFinal.db.Repository
         public int Update(int id, PetInput dados) {
             var pet = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
 
-            // Aqui pego a pessoa cuidadora pelo id para conseguir procurá-la no banco.
-            var pessoaCuidadora = _context.PessoasCuidadoras.Where(p => p.Id == dados.PessoaCuidadora).FirstOrDefault();
+            // Aqui pego a pessoa cuidadora pelo email para conseguir procurá-la no banco.
+            var pessoaCuidadora = _context.PessoasCuidadoras.Where(p => p.Email == dados.PessoaCuidadora).FirstOrDefault();
             
             if (pet == null || pessoaCuidadora == null) return 0;
 
