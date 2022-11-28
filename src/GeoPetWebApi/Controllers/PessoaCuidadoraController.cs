@@ -64,8 +64,7 @@ public class PessoaCuidadoraController : ControllerBase
         if(inputPessoaCuidadora == null) return StatusCode(400, "Dados inválidos");
 
         // User.Claim precisa ficar na controlar porque vem da controllerBase
-        // https://stackoverflow.com/questions/60444977/how-to-get-identity-user-from-his-authentication-jwt-token-in-net-core-api
-        // https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/blob/dev/src/System.IdentityModel.Tokens.Jwt/ClaimTypeMapping.cs#L54
+        
         var emailAutorizado = User.Claims.Where(em => em.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
         var senhaAutorizada = User.Claims.Where(s => s.Type == "senha").FirstOrDefault()?.Value;
 
