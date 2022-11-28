@@ -38,7 +38,7 @@ public class PessoaCuidadoraController : ControllerBase
     ///<summary>Retorna todas as pessoas cuidadoras cadastradas no bd</summary>
     ///<response code="200"> retorna uma lista de pesssoas cuidadoras</response>
     ///<response code="404">retorna um objeto com uma mensagem de erro </response>
-    [HttpGet(Name = "GetAllPessoaCuidadora")]
+    [HttpGet(Name = "GetAll")]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
     [Authorize]
     public IActionResult GetAll() {
@@ -64,7 +64,7 @@ public class PessoaCuidadoraController : ControllerBase
             ErrorMessage = "Dados inválidos",
         });
         
-        if(!VerifyClaimsEmailAndSenha(email, senha)) return StatusCode(400, new ResultRowstOuput() {
+        if(!_service.VerifyClaimsEmailAndSenha(User, email, senha)) return StatusCode(400, new ResultRowstOuput() {
             ErrorMessage = "Email ou senha inválida",
         });
 
@@ -87,7 +87,7 @@ public class PessoaCuidadoraController : ControllerBase
     [Authorize]
     public IActionResult UpdateStatusPessoaCuidadora(string email, string senha)
     {
-        if(!VerifyClaimsEmailAndSenha(email, senha)) return StatusCode(400, new ResultRowstOuput() {
+        if(!_service.VerifyClaimsEmailAndSenha(User, email, senha)) return StatusCode(400, new ResultRowstOuput() {
             ErrorMessage = "Email ou senha inválida",
         });
 
@@ -97,11 +97,11 @@ public class PessoaCuidadoraController : ControllerBase
     }
 
     // User.Claim precisa ficar na controlar porque vem da controllerBase
-    public bool VerifyClaimsEmailAndSenha(string email, string senha)
+    /* public bool VerifyClaimsEmailAndSenha(string email, string senha)
     {
         var emailAutorizado = User.Claims.Where(em => em.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
         var senhaAutorizada = User.Claims.Where(s => s.Type == "senha").FirstOrDefault()?.Value;
 
         return email == emailAutorizado && senha == senhaAutorizada;
-    }
+    } */
 }

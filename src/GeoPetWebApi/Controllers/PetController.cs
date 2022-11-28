@@ -37,7 +37,7 @@ namespace projetoFinal.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
         [Authorize]
-        public IActionResult GetAll() {
+        public IActionResult GetAllPet() {
             var pets = _service.GetAll();
             if (pets == null) return StatusCode(404, new ResultRowstOuput() {
             ErrorMessage = "N�o h� pets cadastrados",
@@ -48,7 +48,7 @@ namespace projetoFinal.Controllers;
         ///<summary>Rota para buscar um pet pelo id</summary>
         ///<response code="200"> Retorna um pet pelo id </response>
         ///<response code="404">retorna um objeto com uma mensagem de erro </response>
-        [HttpGet(Name = "GetById")]
+        [HttpGet("{id}", Name = "GetById")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
         [Authorize]

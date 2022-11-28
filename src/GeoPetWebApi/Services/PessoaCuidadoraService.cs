@@ -125,5 +125,13 @@ namespace projetoFinal.Services
             return output;
         }
 
+        public bool VerifyClaimsEmailAndSenha(ClaimsPrincipal user, string email, string senha)
+        {
+            var emailAutorizado = user.Claims.Where(em => em.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
+            var senhaAutorizada = user.Claims.Where(s => s.Type == "senha").FirstOrDefault()?.Value;
+
+            return email == emailAutorizado && senha == senhaAutorizada;
+        }
+
     };
 };
