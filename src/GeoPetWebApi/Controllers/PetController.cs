@@ -22,6 +22,7 @@ namespace projetoFinal.Controllers;
         [HttpPost(Name = "PetInput")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ResultRowstOuput))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
+        [Authorize]
         public async Task<IActionResult> AddPet([FromBody] PetInput data) {
             var response = await _service.CreatePet(data);
             if (response.ErrorMessage == null) {
