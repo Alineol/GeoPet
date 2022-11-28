@@ -18,7 +18,35 @@ namespace projetoFinal.db.Repository
             _context.Pets.Add(pet);
             return _context.SaveChanges();
         }
-        
+
+        public IEnumerable<PetModel> GetAll() {
+            var result = _context.Pets.Select(pet => new PetModel()
+            {
+                Nome = pet.Nome,
+                Peso = pet.Peso,
+                Idade = pet.Idade,
+                Raca = pet.Raca,
+                Porte = pet.Porte,
+                Status = pet.Status,
+                Id = pet.Id,
+                PessoaCuidadora = pet.PessoaCuidadora,
+                HashLocalizacao = pet.HashLocalizacao,
+            });
+
+            return result;
+        }
+
+        public PetModel GetById(int id)
+        {
+            var result = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
+            return result!;
+        }
+
+        public PetModel GetByHash(string hash)
+        {
+            var result = _context.Pets.Where(p => p.HashLocalizacao == hash).FirstOrDefault();
+            return result!;
+        }
     }
 
     
