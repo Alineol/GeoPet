@@ -2,6 +2,7 @@ using GeoPetWebApi.Controllers.inputs;
 using Microsoft.AspNetCore.Mvc;
 using projetoFinal.Controllers.inputs;
 using projetoFinal.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace projetoFinal.Controllers;
 
@@ -27,5 +28,35 @@ namespace projetoFinal.Controllers;
                 return StatusCode(201, response);
             }
             return StatusCode(400, response);
+        }
+
+        ///<summary>Rota para buscar todos os pets cadastrados</summary>
+        ///<response code="200"> Retorna uma lista de pets </response>
+        ///<response code="404">retorna um objeto com uma mensagem de erro </response>
+        [HttpGet(Name = "GetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
+        [Authorize]
+        public IActionResult GetAll() {
+            var pets = _service.GetAll();
+            if (pets == null) return StatusCode(404, new ResultRowstOuput() {
+            ErrorMessage = "N�o h� pets cadastrados",
+            });
+            return StatusCode(200, pets);
+        }
+
+        ///<summary>Rota para buscar um pet pelo id</summary>
+        ///<response code="200"> Retorna um pet pelo id </response>
+        ///<response code="404">retorna um objeto com uma mensagem de erro </response>
+        [HttpGet(Name = "GetById")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultRowstOuput))]
+        [Authorize]
+        public IActionResult GetById(int id) {
+            var pet = _service.GetById(id);
+            if (pet == null) return StatusCode(404, new ResultRowstOuput() {
+            ErrorMessage = "Pet não encontrado",
+            });
+            return StatusCode(200, pet);
         }
     }

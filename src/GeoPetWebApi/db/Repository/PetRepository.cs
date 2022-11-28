@@ -39,6 +39,7 @@ namespace projetoFinal.db.Repository
         public PetModel GetById(int id)
         {
             var result = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
+            
             return result!;
         }
     }
