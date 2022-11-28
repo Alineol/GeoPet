@@ -36,11 +36,37 @@ namespace projetoFinal.db.Repository
             return result;
         }
 
-        public PetModel GetById(int id)
+        public PetModel? GetById(int id)
         {
             var result = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
             
-            return result!;
+            return result;
+        }
+
+        public int Update(int id, PetInput dados) {
+            var pet = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
+
+            if (pet == null) return 0;
+
+            pet.Nome = dados.Nome;
+            pet.Peso = dados.Peso;
+            pet.Idade = dados.Idade;
+            pet.Raca = dados.Raca;
+            pet.Porte = dados.Porte;
+            pet.HashLocalizacao = dados.HashLocalizacao;
+            // pet.PessoaCuidadora = dados.PessoaCuidadora;
+
+            return _context.SaveChanges();
+        }
+
+        public int UpdateStatus(int id) {
+            var pet = GetById(id);
+
+            if (pet == null) return 0;
+            
+            pet.Status = !pet.Status;
+
+            return _context.SaveChanges();
         }
     }
 
