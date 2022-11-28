@@ -53,5 +53,25 @@ namespace projetoFinal.Services
             return Convert.ToBase64String(hash);
         }
 
+        public IEnumerable<PetModel>? GetAll() {
+            var pets = _repository.GetAll();
+            return pets;
+        }
+
+        public PetModel? GetById(int id) {
+            /* var output = new ResultRowstOuput();
+
+            var pet = _repository.GetById(id);
+
+            if (pet == null) {
+                output.ErrorMessage = "Pet não encontrado.";
+            }
+
+            output.SucessMessage = pet.ToString();
+            return output; */
+            var pet = _repository.GetById(id);
+            return pet;
+        }
+
     };
 };
