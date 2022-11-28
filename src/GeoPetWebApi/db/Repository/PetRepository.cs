@@ -41,12 +41,6 @@ namespace projetoFinal.db.Repository
             var result = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
             return result!;
         }
-
-        public PetModel GetByHash(string hash)
-        {
-            var result = _context.Pets.Where(p => p.HashLocalizacao == hash).FirstOrDefault();
-            return result!;
-        }
     }
 
     
