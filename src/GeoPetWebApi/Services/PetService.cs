@@ -29,7 +29,6 @@ namespace projetoFinal.Services
                 return output;
             }        
 
-
             // tudo ok? cria um pet do jeito que o bd espera 
             var model = new PetModel() {
                 Nome = pet.Nome,
@@ -51,6 +50,26 @@ namespace projetoFinal.Services
             byte[] bytes = Encoding.ASCII.GetBytes(password);
             byte[] hash = md5.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
+        }
+
+        public IEnumerable<PetModel>? GetAll() {
+            var pets = _repository.GetAll();
+            return pets;
+        }
+
+        public PetModel? GetById(int id) {
+            /* var output = new ResultRowstOuput();
+
+            var pet = _repository.GetById(id);
+
+            if (pet == null) {
+                output.ErrorMessage = "Pet não encontrado.";
+            }
+
+            output.SucessMessage = pet.ToString();
+            return output; */
+            var pet = _repository.GetById(id);
+            return pet;
         }
 
     };

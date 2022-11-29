@@ -22,10 +22,12 @@ builder.Services.AddScoped<Context>();
 // adiciona o repository e a service de pessoaCuidadora
 builder.Services.AddScoped<PessoaCuidadoraRepository>();
 builder.Services.AddScoped<PessoaCuidadoraService>();
+builder.Services.AddScoped<PetRepository>();
+builder.Services.AddScoped<PetService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "GeoPet API", Description = "Api para manipulação de dados da GeoPet", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "GeoPet API", Description = "Api para manipulaï¿½ï¿½o de dados da GeoPet", Version = "v1" });
     string file = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     string path = Path.Combine(AppContext.BaseDirectory, file);
     options.IncludeXmlComments(path);
@@ -62,10 +64,12 @@ builder.Services.AddAuthentication(options => {
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters() {
-        ValidateIssuer = false,
-        ValidateAudience = false,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+        ValidateIssuer = true,
+        ValidateAudience =  true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("2d74025e7bcf058897d8daaa99ae99b5"))
     };
 });
 
@@ -85,7 +89,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
 
 app.MapControllers();
 
