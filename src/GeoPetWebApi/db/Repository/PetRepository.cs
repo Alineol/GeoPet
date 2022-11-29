@@ -29,7 +29,13 @@ namespace projetoFinal.db.Repository
                 Porte = pet.Porte,
                 Status = pet.Status,
                 Id = pet.Id,
-                PessoaCuidadora = pet.PessoaCuidadora,
+                PessoaCuidadora = new PessoaCuidadoraModel()
+                {
+                    Nome = pet.PessoaCuidadora.Nome,
+                    Email = pet.PessoaCuidadora.Email,
+                    Id = pet.PessoaCuidadora.Id,
+                    Status = pet.PessoaCuidadora.Status,
+                },
                 HashLocalizacao = pet.HashLocalizacao,
             });
 
@@ -40,20 +46,26 @@ namespace projetoFinal.db.Repository
         {
             var pet = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
 
-            var result = new PetModel()
+            /* var result = new PetModel()
             {
-                Nome = pet.Nome,
+                Nome = pet!.Nome,
                 Peso = pet.Peso,
                 Idade = pet.Idade,
                 Raca = pet.Raca,
                 Porte = pet.Porte,
                 Status = pet.Status,
                 Id = pet.Id,
-                PessoaCuidadora = pet.PessoaCuidadora,
+                PessoaCuidadora = new PessoaCuidadoraModel()
+                {
+                    Nome = pet.PessoaCuidadora.Nome,
+                    Email = pet.PessoaCuidadora.Email,
+                    Id = pet.PessoaCuidadora.Id,
+                    Status = pet.PessoaCuidadora.Status,
+                },
                 HashLocalizacao = pet.HashLocalizacao,
-            };
+            }; */
 
-            return result;
+            return pet;
         }
 
         public int Update(int id, PetInput dados) {
