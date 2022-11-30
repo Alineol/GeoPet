@@ -72,5 +72,29 @@ namespace projetoFinal.Services
             return pet;
         }
 
+        public ResultRowstOuput UpdatePet(int id, PetInput upPet)
+        {
+            var output = new ResultRowstOuput();
+            var pessoaCuidadora = _pessoaCuidadora.GetByEmail(upPet.PessoaCuidadora);
+            if(pessoaCuidadora == null || !pessoaCuidadora.Status){
+                output.ErrorMessage = "Email não corresponde a um usuário válido";
+                return output;
+            } 
+
+            var updatedPet = _repository.Update(id, upPet);
+
+            if (updatedPet == 0)
+            {
+                output.ErrorMessage = "Erro ao atualizar cadastro.";
+                return output;
+            }
+
+            output.RowsAffected = updatedPet;
+            output.SucessMessage = "Pet atualizado.";
+
+            return output;
+        }
+
+
     };
 };

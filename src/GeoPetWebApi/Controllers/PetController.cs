@@ -60,4 +60,30 @@ namespace projetoFinal.Controllers;
             });
             return StatusCode(200, pet);
         }
+
+         ///<summary>Atualiza dados da pessoa cuidadora</summary>
+    ///<response code="400"> Encontra um problema na atualização</response>
+    ///<response code="404"> Usuário não autorizado de realizar a atualização </response>
+    ///<response code="204"> Atualiza com sucesso os dados </response>
+    [HttpPut(Name = "UpdatePet")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
+    [Authorize]
+    public IActionResult UpdatePet(int id,  [FromBody]PetInput inputPet)
+    {
+        if(inputPet == null) return StatusCode(400, new ResultRowstOuput() {
+            ErrorMessage = "Dados inválidos",
+        });
+
+        var result = _service.UpdatePet(id, inputPet);
+
+        if (result.ErrorMessage == null) 
+        { 
+            return StatusCode(200, result);
+        }
+        return StatusCode(400,result);
+        
+        // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsInNlbmhhIjoiMTIzNDU2NyIsIm5iZiI6MTY2OTYwMzE0NSwiZXhwIjoxNjY5Nzc1OTQ1LCJpYXQiOjE2Njk2MDMxNDUsImlzcyI6IkdydXBvQWxpbmVPbGl2ZWlyYUVkdWFyZG9Tb3V6YU1hcmNlbGxlTW9udGVpcm8iLCJhdWQiOiJBdmFsaWFkb3Jlc0FjZWxlcmFjYW9DU2hhcnBUcnliZSJ9.lQj02t_KadDwOTKBL8IrQRUnL6iDXGZQiDFNuEesISo
+    }
+
     }
