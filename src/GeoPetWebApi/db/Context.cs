@@ -10,8 +10,11 @@ public class Context : DbContext
 
     private readonly IConfiguration _configuration;
  
-    public Context(DbContextOptions<Context> options, IConfiguration configuration) : base(options){
-        _configuration = configuration;
+    public Context(DbContextOptions<Context> options, IConfiguration? configuration) : base(options){
+        if (configuration is not null)
+        {
+            _configuration = configuration;
+        }
     }
 
     public Context() { }
