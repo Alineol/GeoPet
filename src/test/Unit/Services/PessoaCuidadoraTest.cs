@@ -13,10 +13,6 @@ namespace src.Unit.Services;
 
 public class PessoaCuidadoraServiceTest: Configuration
 {
-
-    private readonly ServicedefaultFixture _fixture = new ServicedefaultFixture();
-  
-
     [Fact]
     public void CreatePessoaCuidadoraTestShouldSucess()
     {
