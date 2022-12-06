@@ -1,4 +1,4 @@
-using GeoPetWebApi.db.Repository.video_portal.Repository;
+using GeoPetWebApi.db.Repository;
 using Microsoft.EntityFrameworkCore;
 using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.db.Models.Pets;

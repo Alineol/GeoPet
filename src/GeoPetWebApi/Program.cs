@@ -1,4 +1,4 @@
-using GeoPetWebApi.db.Repository.video_portal.Repository;
+using GeoPetWebApi.db.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
