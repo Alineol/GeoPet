@@ -1,14 +1,12 @@
+using GeoPetWebApi.db.Repository.video_portal.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using projetoFinal.db;
 using projetoFinal.db.Repository;
 using projetoFinal.Services;
-using System.Diagnostics.Metrics;
 using System.Reflection;
-using System.Reflection.Metadata;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<Context>();
-builder.Services.AddScoped<Context>();
+builder.Services.AddScoped<IGeoPetContext, Context>();
 // adiciona o repository e a service de pessoaCuidadora
 builder.Services.AddScoped<PessoaCuidadoraRepository>();
 builder.Services.AddScoped<PessoaCuidadoraService>();
