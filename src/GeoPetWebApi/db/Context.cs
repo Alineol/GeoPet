@@ -1,9 +1,10 @@
+using GeoPetWebApi.db.Repository;
 using Microsoft.EntityFrameworkCore;
 using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.db.Models.Pets;
 
 namespace projetoFinal.db;
-public class Context : DbContext
+public class Context : DbContext, IGeoPetContext
 {
     public DbSet<PessoaCuidadoraModel> PessoasCuidadoras {get; set;}
     public DbSet<PetModel> Pets {get; set;}

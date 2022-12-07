@@ -1,13 +1,15 @@
 ﻿using projetoFinal.Controllers.inputs;
 using projetoFinal.db.Models.PessoaCuidadora;
 using System.Reflection.Metadata.Ecma335;
+using GeoPetWebApi.db.Repository;
 
 namespace projetoFinal.db.Repository
 {
     public class PessoaCuidadoraRepository
     {
-        private readonly Context _context;
-        public PessoaCuidadoraRepository(Context context)
+        private readonly IGeoPetContext _context;
+
+        public PessoaCuidadoraRepository(IGeoPetContext context)
         {
             _context = context;
         }

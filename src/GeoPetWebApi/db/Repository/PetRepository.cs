@@ -1,3 +1,4 @@
+using GeoPetWebApi.db.Repository;
 using projetoFinal.Controllers.inputs;
 using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.db.Models.Pets;
@@ -7,8 +8,8 @@ namespace projetoFinal.db.Repository
 {
     public class PetRepository
     {
-        private readonly Context _context;
-        public PetRepository(Context context)
+        private readonly IGeoPetContext _context;
+        public PetRepository(IGeoPetContext context)
         {
             _context = context;
         }
