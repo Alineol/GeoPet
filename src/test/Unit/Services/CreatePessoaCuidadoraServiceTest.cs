@@ -1,17 +1,11 @@
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Net.Http.Headers;
-using AutoFixture;
-using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.db.Repository;
 using projetoFinal.Services;
-using Microsoft.Extensions.Configuration;
 using projetoFinal.Controllers.inputs;
 using FluentAssertions;
-using projetoFinal.Controllers;
 
 namespace src.Unit.Services;
 
-public class PessoaCuidadoraServiceTest: Configuration
+public class CreatePessoaCuidadoraServiceTest: Configuration
 {
     [Fact]
     public void CreatePessoaCuidadoraTestShouldSucess()
