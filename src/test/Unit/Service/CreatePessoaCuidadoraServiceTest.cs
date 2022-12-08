@@ -1,30 +1,27 @@
-using projetoFinal.db.Repository;
 using projetoFinal.Services;
 using projetoFinal.Controllers.inputs;
 using FluentAssertions;
-
-namespace src.Unit.Services;
+using static src.Unit.helpers.GeneratePessoaCuidadoraHelpers;
+namespace src.Unit.Service;
 
 public class CreatePessoaCuidadoraServiceTest: Configuration
 {
+    private readonly PessoaCuidadoraService _service = GeneratePessoaCuidadoraService();
+
     [Fact]
     public void CreatePessoaCuidadoraTestShouldSucess()
     {
-        var context = new GeoPetWebApiContextTest();
-        var repository = new PessoaCuidadoraRepository(context);
-        var client = new HttpClient();
-        var service = new PessoaCuidadoraService(repository, client, InitConfiguration());
 
         PessoaCuidadoraInput pessoaCuidadorainput = new()
         {
-            Email = "string@gmail.com",
+            Email = "string@gmail1.com",
             Nome = "stringstring",
             CEP = "20020000",
             Senha = "12345678"
 
         };
 
-        var output = service.CreatePessoaCuidadora(pessoaCuidadorainput);
+        var output = _service.CreatePessoaCuidadora(pessoaCuidadorainput);
 
         output.Result.RowsAffected.Should().Be(1);
         output.Result.ErrorMessage.Should().BeNullOrEmpty();
@@ -35,22 +32,19 @@ public class CreatePessoaCuidadoraServiceTest: Configuration
     [Fact]
     public  async void CreatePessoaCuidadoraTestShouldfFailByEmail()
     {
-        var context = new GeoPetWebApiContextTest();
-        var repository = new PessoaCuidadoraRepository(context);
-        var client = new HttpClient();
-        var service = new PessoaCuidadoraService(repository, client, InitConfiguration());
 
         PessoaCuidadoraInput pessoaCuidadorainput = new()
         {
-            Email = "string@gmail.com",
+            Email = "string@gmail2.com",
             Nome = "stringstring",
             CEP = "20020000",
             Senha = "12345678"
 
         };
-       
-        await service.CreatePessoaCuidadora(pessoaCuidadorainput);
-        var output = service.CreatePessoaCuidadora(pessoaCuidadorainput);
+
+        await _service.CreatePessoaCuidadora(pessoaCuidadorainput);
+
+        var output = _service.CreatePessoaCuidadora(pessoaCuidadorainput);
 
         output.Result.RowsAffected.Should().Be(0);
         output.Result.ErrorMessage.Should().Be("Email Já cadastrado");
@@ -61,21 +55,17 @@ public class CreatePessoaCuidadoraServiceTest: Configuration
     [Fact]
     public void CreatePessoaCuidadoraTestShouldfFailByCep()
     {
-        var context = new GeoPetWebApiContextTest();
-        var repository = new PessoaCuidadoraRepository(context);
-        var client = new HttpClient();
-        var service = new PessoaCuidadoraService(repository, client, InitConfiguration());
 
         PessoaCuidadoraInput pessoaCuidadorainput = new()
         {
-            Email = "string@gmail.com",
+            Email = "string2@gmail.com",
             Nome = "stringstring",
             CEP = "12345678",
             Senha = "12345678"
 
         };
        
-        var output = service.CreatePessoaCuidadora(pessoaCuidadorainput);
+        var output = _service.CreatePessoaCuidadora(pessoaCuidadorainput);
 
         output.Result.RowsAffected.Should().Be(0);
         output.Result.ErrorMessage.Should().Be("CEP inválido");
