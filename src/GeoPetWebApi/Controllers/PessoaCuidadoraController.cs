@@ -21,6 +21,7 @@ public class PessoaCuidadoraController : ControllerBase
         _logger = logger;
         _service = service;
     }
+
     ///<summary>Cria Pessoas Cuidadoras</summary>
     ///<response code="201"> retorna um objeto com a quantidade de linhas afetadas</response>
     ///<response code="400"> retorna um objeto com uma mensagem de erro</response>
@@ -36,6 +37,7 @@ public class PessoaCuidadoraController : ControllerBase
         return StatusCode(400,result);
 
     }
+
     ///<summary>Retorna todas as pessoas cuidadoras cadastradas no bd</summary>
     ///<response code="200"> retorna uma lista de pesssoas cuidadoras</response>
     ///<response code="404">retorna um objeto com uma mensagem de erro </response>
