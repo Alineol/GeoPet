@@ -2,7 +2,7 @@ using projetoFinal.Services;
 using projetoFinal.Controllers.inputs;
 using FluentAssertions;
 using static src.Unit.helpers.GeneratePessoaCuidadoraHelpers;
-namespace src.Unit.Services;
+namespace src.Unit.Service;
 
 public class CreatePessoaCuidadoraServiceTest: Configuration
 {
