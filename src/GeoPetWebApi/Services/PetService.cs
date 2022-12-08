@@ -13,10 +13,14 @@ namespace projetoFinal.Services
     public class PetService {
         private readonly PetRepository _repository;
         private readonly PessoaCuidadoraRepository _pessoaCuidadora;
+        private readonly HttpClient _client;
+        private readonly IConfiguration _config;
 
-        public PetService(PetRepository repository,PessoaCuidadoraRepository pessoaCuidadoraRepository) {
+        public PetService(PetRepository repository,PessoaCuidadoraRepository pessoaCuidadoraRepository, HttpClient client, IConfiguration config) {
             _repository = repository;
             _pessoaCuidadora = pessoaCuidadoraRepository;
+            _client = client;
+            _config = config;
         }
 
         public async Task<ResultRowstOuput> CreatePet(PetInput pet) {
