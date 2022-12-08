@@ -10,21 +10,19 @@ using Moq.AutoMock;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using static src.Unit.helpers.GeneratePessoaCuidadoraHelpers;
+
 
 namespace src.Unit.Controller
 {
     public class CreatePessoaCuidadoraControllerTest
     {
+        private readonly PessoaCuidadoraController _controller = GeneratePessoaCuidadoraController();
         
 
         [Fact]
-        public async void ShouldCreatePessoaCuidadoraWithStatus201()
+        public  void ShouldCreatePessoaCuidadoraWithStatus201()
         {
-            var context = new GeoPetWebApiContextTest();
-            var repository = new PessoaCuidadoraRepository(context);
-            var client = new HttpClient();
-            var service = new PessoaCuidadoraService(repository, client, InitConfiguration());
-            var controller = new PessoaCuidadoraController(It.IsAny<ILogger<PessoaCuidadoraController>>(), service);
 
             PessoaCuidadoraInput pessoaCuidadorainput = new()
             {
@@ -36,7 +34,7 @@ namespace src.Unit.Controller
             };
 
 
-            var output = controller.CreatePessoaCuidadora(pessoaCuidadorainput).Result as ObjectResult;
+            var output = _controller.CreatePessoaCuidadora(pessoaCuidadorainput).Result as ObjectResult;
             var value = output?.Value as ResultRowstOuput;
 
             output?.StatusCode.Should().Be(201);
@@ -45,14 +43,9 @@ namespace src.Unit.Controller
         }
 
         [Fact]
-        public async void ShouldCreatePessoaCuidadoraWithFailStatus400()
+        public  void ShouldCreatePessoaCuidadoraWithFailStatus400()
         {
-            var context = new GeoPetWebApiContextTest();
-            var repository = new PessoaCuidadoraRepository(context);
-            var client = new HttpClient();
-            var service = new PessoaCuidadoraService(repository, client, InitConfiguration());
-            var controller = new PessoaCuidadoraController(It.IsAny<ILogger<PessoaCuidadoraController>>(), service);
-
+            
             PessoaCuidadoraInput pessoaCuidadorainput = new()
             {
                 Email = "string@gmail.com",
@@ -62,7 +55,7 @@ namespace src.Unit.Controller
             };
 
 
-            var output = controller.CreatePessoaCuidadora(pessoaCuidadorainput).Result as ObjectResult;
+            var output = _controller.CreatePessoaCuidadora(pessoaCuidadorainput).Result as ObjectResult;
             var value = output?.Value as ResultRowstOuput;
 
             output?.StatusCode.Should().Be(400);

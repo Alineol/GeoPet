@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using projetoFinal.db.Models.PessoaCuidadora;
 using projetoFinal.db.Repository;
+using static src.Unit.helpers.GeneratePessoaCuidadoraHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,11 @@ namespace src.Unit.Repository
 {
     public class CreatePessoaCuidadoraRepositoryTest
     {
+        private readonly PessoaCuidadoraRepository _repository = GeneratePessoaCuidadoraRepository();
+
         [Fact]
         public void ShouldCreatePessoaCuidadoraWithSucecc()
         {
-            var context = new GeoPetWebApiContextTest();
-            var repository = new PessoaCuidadoraRepository(context);
             PessoaCuidadoraModel input = new PessoaCuidadoraModel()
             {
                 CEP = "12345678",
@@ -24,7 +25,7 @@ namespace src.Unit.Repository
                 Email = "string",
                 Status = true
             };
-            var ouput = repository.CreatePessoaCuidadora(input);
+            var ouput = _repository.CreatePessoaCuidadora(input);
             ouput.Should().Be(1);
         }
     }
