@@ -13,13 +13,15 @@ namespace src.Unit.Services;
 
 public class PessoaCuidadoraServiceTest: Configuration
 {
+    static GeoPetWebApiContextTest context = new();
+    static PessoaCuidadoraRepository repository = new(context);
+    static HttpClient client = new();
+    PessoaCuidadoraService service = new (repository, client, InitConfiguration());
+
     [Fact]
     public void CreatePessoaCuidadoraTestShouldSucess()
     {
-        var context = new GeoPetWebApiContextTest();
-        var repository = new PessoaCuidadoraRepository(context);
-        var client = new HttpClient();
-        var service = new PessoaCuidadoraService(repository, client, InitConfiguration());
+        
         var output = new ResultRowstOuput();
 
         PessoaCuidadoraInput pessoaCuidadorainput = new()
@@ -34,7 +36,5 @@ public class PessoaCuidadoraServiceTest: Configuration
         var result = service.CreatePessoaCuidadora(pessoaCuidadorainput);
 
         result.Result.Should().NotBeNull();
-
-
     }
 }
