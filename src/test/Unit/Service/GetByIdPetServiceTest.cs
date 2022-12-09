@@ -1,10 +1,7 @@
 using AutoFixture;
 using FluentAssertions;
-using projetoFinal.db.Repository;
 using projetoFinal.Services;
-using projetoFinal.Controllers;
 using static src.Unit.helpers.GeneratePetHelpers;
-using projetoFinal.db.Models.Pets;
 using projetoFinal.Controllers.inputs;
 
 namespace src.Unit.Services;
@@ -47,7 +44,7 @@ public class GetByIdPetServiceTest
     }
 
     [Fact]
-    public async void TestShouldFailBecauseIdIsNotFound()
+    public async void TestShouldNullIfIdIsNotFound()
     {
         var cuidadores = fixture.Create<List<PessoaCuidadoraInput>>();
         cuidadores[0].CEP = "20020000";

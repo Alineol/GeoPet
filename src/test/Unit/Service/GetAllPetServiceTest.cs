@@ -1,10 +1,7 @@
 using AutoFixture;
 using FluentAssertions;
-using projetoFinal.db.Repository;
 using projetoFinal.Services;
-using projetoFinal.Controllers;
 using static src.Unit.helpers.GeneratePetHelpers;
-using projetoFinal.db.Models.Pets;
 using projetoFinal.Controllers.inputs;
 
 namespace src.Unit.Services;
