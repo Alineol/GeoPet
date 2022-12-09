@@ -90,6 +90,22 @@ namespace projetoFinal.Services
             return output;
         }
 
+        public ResultRowstOuput UpdateStatusPet(int id)
+        {
+            var output = new ResultRowstOuput();
+
+            var newStatus = _repository.UpdateStatus(id);
+
+            output.RowsAffected = newStatus;
+
+            var pet = _repository.GetById(id);
+
+            if (pet!.Status) output.SucessMessage = "Pet ativado.";
+            
+            else output.SucessMessage = "Pet inativado.";
+
+            return output;
+        }
 
     };
 };
