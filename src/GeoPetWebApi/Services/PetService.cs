@@ -63,16 +63,6 @@ namespace projetoFinal.Services
         }
 
         public PetModel? GetById(int id) {
-            /* var output = new ResultRowstOuput();
-
-            var pet = _repository.GetById(id);
-
-            if (pet == null) {
-                output.ErrorMessage = "Pet não encontrado.";
-            }
-
-            output.SucessMessage = pet.ToString();
-            return output; */
             var pet = _repository.GetById(id);
             return pet;
         }
