@@ -82,8 +82,8 @@ public class UpdatePetRepositoryTest
         
         pets.ForEach(pet => _repository.CreatePet(pet));
 
-        var atual = _repository.GetById(ID);
-        atual!.Peso.Should().Be(pets[0].Peso);
+        var valuePet = _repository.GetById(ID);
+        valuePet!.Peso.Should().Be(pets[0].Peso);
 
         var upPet = new PetInput()
         {
@@ -98,8 +98,8 @@ public class UpdatePetRepositoryTest
 
         _repository.Update(ID, upPet);
 
-        var atualizado = _repository.GetById(ID);
-        atualizado!.Peso.Should().Be(upPet.Peso);
+        valuePet = _repository.GetById(ID);
+        valuePet!.Peso.Should().Be(upPet.Peso);
     }
 }
 
