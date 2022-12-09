@@ -8,7 +8,6 @@ using projetoFinal.db.Models.PessoaCuidadora;
 namespace src.Unit.Repository;
 public class GetAllPetRepositoryTest
 {
-    static readonly Fixture fixture = new();
     private readonly static GeoPetWebApiContextTest context = new();
     private readonly PetRepository _repository = GeneratePetRepository(context); 
 
