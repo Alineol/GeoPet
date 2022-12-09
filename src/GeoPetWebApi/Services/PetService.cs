@@ -23,7 +23,7 @@ namespace projetoFinal.Services
             _config = config;
         }
 
-        public async Task<ResultRowstOuput> CreatePet(PetInput pet) {
+        public ResultRowstOuput CreatePet(PetInput pet) {
             var output = new ResultRowstOuput();
 
             //verifica se o email corresponde a um usuário válido
@@ -46,6 +46,7 @@ namespace projetoFinal.Services
             };
             output.RowsAffected = _repository.CreatePet(model);
             output.SucessMessage = $"Created Pet with id {model.Id}";
+            
             return output;
         } 
 
