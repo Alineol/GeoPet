@@ -13,6 +13,7 @@ public class UpdatePetServiceTest
     private readonly PetService _service = GeneratePetService(context);
     private readonly PessoaCuidadoraService _servicePessoa = GeneratePessoaCuidadoraService(context); 
     static readonly Fixture fixture = new();
+    private static readonly int ID = 1;
 
     [Fact]
     public async void ShouldUpdateWithSucess()
@@ -39,7 +40,7 @@ public class UpdatePetServiceTest
         newValue.Peso = 15;
 
 
-        var result = _service.UpdatePet(id: 1, upPet: newValue);
+        var result = _service.UpdatePet(id: ID, upPet: newValue);
 
         result.ErrorMessage.Should().BeNull();
         result.SucessMessage.Should().NotBeNull();
@@ -71,7 +72,7 @@ public class UpdatePetServiceTest
         newValue.PessoaCuidadora = "email.error";
 
 
-        var result = _service.UpdatePet(id: 1, upPet: newValue);
+        var result = _service.UpdatePet(id: ID, upPet: newValue);
 
         result.ErrorMessage.Should().NotBeNull();
         result.ErrorMessage.Should().Be("Email não corresponde a um usuário válido");
