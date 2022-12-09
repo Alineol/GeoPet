@@ -4,15 +4,16 @@ using projetoFinal.db.Repository;
 using static src.Unit.helpers.GeneratePetHelpers;
 using projetoFinal.db.Models.Pets;
 using projetoFinal.db.Models.PessoaCuidadora;
+using projetoFinal.Controllers.inputs;
 
 namespace src.Unit.Repository;
-public class GetByIdPetRepositoryTest
+public class UpdatePetRepositoryTest
 {
     private readonly static GeoPetWebApiContextTest context = new();
     private readonly PetRepository _repository = GeneratePetRepository(context); 
     private static readonly int ID = 1; 
     [Fact]
-    public void ShoulGetByIdPetWithSucess()
+    public void ShoulUpdatePetWithSucess()
     {
         List<PessoaCuidadoraModel> cuidadores = new()
             {
@@ -81,12 +82,24 @@ public class GetByIdPetRepositoryTest
         
         pets.ForEach(pet => _repository.CreatePet(pet));
 
-        var output =  _repository.GetById(ID);
+        var atual = _repository.GetById(ID);
+        atual!.Peso.Should().Be(pets[0].Peso);
 
-        output.Should().NotBeNull();
-        output.Nome.Should().Be(pets[0].Nome);
-        output.Peso.Should().Be(pets[0].Peso);
-        output.Raca.Should().Be(pets[0].Raca);
+        var upPet = new PetInput()
+        {
+            Nome = pets[0].Nome,
+            Peso = 7,
+            PessoaCuidadora = pets[0].PessoaCuidadora.Email,
+            HashLocalizacao = pets[0].HashLocalizacao,
+            Idade = pets[0].Idade,
+            Raca = pets[0].Raca,
+            Porte = pets[0].Porte,
+        };
+
+        _repository.Update(ID, upPet);
+
+        var atualizado = _repository.GetById(ID);
+        atualizado!.Peso.Should().Be(upPet.Peso);
     }
 }
 
