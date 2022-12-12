@@ -60,7 +60,7 @@ namespace projetoFinal.db.Repository
 
         public int UpdateStatus(string email)
         {
-            var person = _context.PessoasCuidadoras.Where(p => p.Email == email).FirstOrDefault();
+            var person = GetByEmail(email);
 
             if (person == null) return 0;
 

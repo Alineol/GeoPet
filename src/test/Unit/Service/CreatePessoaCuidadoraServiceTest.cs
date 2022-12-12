@@ -47,7 +47,7 @@ public class CreatePessoaCuidadoraServiceTest: Configuration
         var output = _service.CreatePessoaCuidadora(pessoaCuidadorainput);
 
         output.Result.RowsAffected.Should().Be(0);
-        output.Result.ErrorMessage.Should().Be("Email J· cadastrado");
+        output.Result.ErrorMessage.Should().Be("Email J√° cadastrado");
 
 
     }
@@ -68,6 +68,6 @@ public class CreatePessoaCuidadoraServiceTest: Configuration
         var output = _service.CreatePessoaCuidadora(pessoaCuidadorainput);
 
         output.Result.RowsAffected.Should().Be(0);
-        output.Result.ErrorMessage.Should().Be("CEP inv·lido");
+        output.Result.ErrorMessage.Should().Be("CEP inv√°lido");
     }
 }

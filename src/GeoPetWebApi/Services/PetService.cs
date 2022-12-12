@@ -13,13 +13,17 @@ namespace projetoFinal.Services
     public class PetService {
         private readonly PetRepository _repository;
         private readonly PessoaCuidadoraRepository _pessoaCuidadora;
+        private readonly HttpClient _client;
+        private readonly IConfiguration _config;
 
-        public PetService(PetRepository repository,PessoaCuidadoraRepository pessoaCuidadoraRepository) {
+        public PetService(PetRepository repository,PessoaCuidadoraRepository pessoaCuidadoraRepository, HttpClient client, IConfiguration config) {
             _repository = repository;
             _pessoaCuidadora = pessoaCuidadoraRepository;
+            _client = client;
+            _config = config;
         }
 
-        public async Task<ResultRowstOuput> CreatePet(PetInput pet) {
+        public ResultRowstOuput CreatePet(PetInput pet) {
             var output = new ResultRowstOuput();
 
             //verifica se o email corresponde a um usuário válido
@@ -42,6 +46,7 @@ namespace projetoFinal.Services
             };
             output.RowsAffected = _repository.CreatePet(model);
             output.SucessMessage = $"Created Pet with id {model.Id}";
+            
             return output;
         } 
 
@@ -58,16 +63,6 @@ namespace projetoFinal.Services
         }
 
         public PetModel? GetById(int id) {
-            /* var output = new ResultRowstOuput();
-
-            var pet = _repository.GetById(id);
-
-            if (pet == null) {
-                output.ErrorMessage = "Pet não encontrado.";
-            }
-
-            output.SucessMessage = pet.ToString();
-            return output; */
             var pet = _repository.GetById(id);
             return pet;
         }
@@ -95,6 +90,22 @@ namespace projetoFinal.Services
             return output;
         }
 
+        public ResultRowstOuput UpdateStatusPet(int id)
+        {
+            var output = new ResultRowstOuput();
+
+            var newStatus = _repository.UpdateStatus(id);
+
+            output.RowsAffected = newStatus;
+
+            var pet = _repository.GetById(id);
+
+            if (pet!.Status) output.SucessMessage = "Pet ativado.";
+            
+            else output.SucessMessage = "Pet inativado.";
+
+            return output;
+        }
 
     };
 };

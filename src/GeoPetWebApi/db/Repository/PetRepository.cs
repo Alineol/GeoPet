@@ -91,7 +91,7 @@ namespace projetoFinal.db.Repository
 
             if (pet == null) return 0;
 
-            pet.Status = !pet.Status;
+            pet!.Status = !pet.Status;
 
             return _context.SaveChanges();
         }
