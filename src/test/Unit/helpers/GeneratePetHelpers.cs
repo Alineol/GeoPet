@@ -44,5 +44,12 @@ namespace src.Unit.helpers
                 GeneratePetService(context));
         }
 
+        public static PessoaCuidadoraController GeneratePessoaCuidadoraController(GeoPetWebApiContextTest context)
+        {
+            return new PessoaCuidadoraController(
+                It.IsAny<ILogger<PessoaCuidadoraController>>(),
+                GeneratePessoaCuidadoraService(context));
+        }
+
     }
 }

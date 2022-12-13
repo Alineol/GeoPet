@@ -12,7 +12,7 @@ public class CreatePetRepositoryTest
     private readonly PetRepository _repository = GeneratePetRepository(context); 
 
     [Fact]
-    public void ShoulGetAllPetWithSucess()
+    public void ShoulCreatePetWithSucess()
     {
         PessoaCuidadoraModel cuidador = new()
                 {
