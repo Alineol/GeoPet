@@ -1,12 +1,14 @@
-using GeoPetWebApi.Controllers.inputs;
 using Microsoft.AspNetCore.Mvc;
 using projetoFinal.Controllers.inputs;
 using projetoFinal.Services;
 using Microsoft.AspNetCore.Authorization;
+using QRCoder;
+using Newtonsoft.Json;
+using System.Drawing;
 
 namespace projetoFinal.Controllers;
 
-    [ApiController]
+[ApiController]
     [Route("[controller]")]
     public class PetController: ControllerBase {
         private readonly ILogger<PetController> _logger;
@@ -47,7 +49,7 @@ namespace projetoFinal.Controllers;
         }
 
         ///<summary>Rota para buscar um pet pelo id</summary>
-        ///<response code="200"> Retorna um pet pelo id </response>
+        ///<response code="200"> Retorna um Qrcode com dados do pet </response>
         ///<response code="404">retorna um objeto com uma mensagem de erro </response>
         [HttpGet("{id}", Name = "GetById")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
@@ -58,32 +60,46 @@ namespace projetoFinal.Controllers;
             if (pet == null) return StatusCode(404, new ResultRowstOuput() {
             ErrorMessage = "Pet não encontrado",
             });
-            return StatusCode(200, pet);
+            var qrCodeGenerator = new QRCodeGenerator();
+            var json = JsonConvert.SerializeObject(pet);
+            var qrCodeData = qrCodeGenerator.CreateQrCode(json, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            var bitmapBytes = BitmapToBytes(qrCodeImage);
+
+            return File(bitmapBytes, "image/jpeg");
         }
 
-         ///<summary>Atualiza dados da pessoa cuidadora</summary>
-    ///<response code="400"> Encontra um problema na atualização</response>
-    ///<response code="404"> Usuário não autorizado de realizar a atualização </response>
-    ///<response code="204"> Atualiza com sucesso os dados </response>
-    [HttpPut(Name = "UpdatePet")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
-    [Authorize]
-    public IActionResult UpdatePet(int id,  [FromBody]PetInput inputPet)
-    {
-        if(inputPet == null) return StatusCode(400, new ResultRowstOuput() {
-            ErrorMessage = "Dados inválidos",
-        });
+        private static byte[] BitmapToBytes(Bitmap img)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
 
-        var result = _service.UpdatePet(id, inputPet);
-
-        if (result.ErrorMessage == null) 
-        { 
-            return StatusCode(200, result);
+                return stream.ToArray();
+            }
         }
-        return StatusCode(400,result);
-        
-        // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsInNlbmhhIjoiMTIzNDU2NyIsIm5iZiI6MTY2OTYwMzE0NSwiZXhwIjoxNjY5Nzc1OTQ1LCJpYXQiOjE2Njk2MDMxNDUsImlzcyI6IkdydXBvQWxpbmVPbGl2ZWlyYUVkdWFyZG9Tb3V6YU1hcmNlbGxlTW9udGVpcm8iLCJhdWQiOiJBdmFsaWFkb3Jlc0FjZWxlcmFjYW9DU2hhcnBUcnliZSJ9.lQj02t_KadDwOTKBL8IrQRUnL6iDXGZQiDFNuEesISo
-    }
 
+        ///<summary>Atualiza dados do Pet</summary>
+        ///<response code="400"> Encontra um problema na atualização</response>
+        ///<response code="404"> Usuário não autorizado de realizar a atualização </response>
+        ///<response code="204"> Atualiza com sucesso os dados </response>
+        [HttpPut(Name = "UpdatePet")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
+        [Authorize]
+        public IActionResult UpdatePet(int id,  [FromBody]PetInput inputPet)
+        {
+            if(inputPet == null) return StatusCode(400, new ResultRowstOuput() {
+                ErrorMessage = "Dados inválidos",
+            });
+
+            var result = _service.UpdatePet(id, inputPet);
+
+            if (result.ErrorMessage == null) 
+            { 
+                return StatusCode(200, result);
+            }
+            return StatusCode(400,result);
+        }
     }
