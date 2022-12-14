@@ -4,7 +4,7 @@ Para rodar a aplicação:
 
 2- Em seguida dê o comando 'dotnet run', se estiver usando o vscode, ou rode a aplicação pelo visualStudio.
 
-
+3 - No log da aplicação aparecerá as rotas que estarão disponíveis, clique na que começa com https e será direcionado ao navegador adiciona /swagger/index.html para ser direcionado para o swagger do projeto e testá-lo.
 
 
 
