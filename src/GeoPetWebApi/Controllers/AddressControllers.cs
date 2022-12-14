@@ -16,16 +16,17 @@ namespace GeoPetWebApi.Controllers {
         }
 
         ///<summary>Cria Pessoas Cuidadoras</summary>
-        ///<response code="20"> retorna um endereço</response>
+        ///<response code="200"> retorna um endereço</response>
         ///<response code="400"> retorna um objeto com uma mensagem de erro</response>
     [HttpPost(Name = "getAddress")]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput) )]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
-    public async Task<IActionResult> GetAddress(double lat, double lon)
+    public async Task<IActionResult> GetAddress([FromBody]AddressInput input)
     {
-        var result = await _service.getAddressByLat(lat, lon);
-
-        return StatusCode(200, result);
+        var result = await _service.GetAddressByLat(input);
+        if(result.error == null)
+        return StatusCode(200, result.display_name);
+        return StatusCode(400, result.error);
 
     }
     }
