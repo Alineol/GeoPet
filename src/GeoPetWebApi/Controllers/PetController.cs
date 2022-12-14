@@ -102,4 +102,24 @@ namespace projetoFinal.Controllers;
             }
             return StatusCode(400,result);
         }
+
+        ///<summary>Atualiza status da pessoa cuidadora("delete")</summary>
+        ///<remarks>Só a própria pessoa pode atualizar o seu status. Essa rota foi criada como uma alternativa ao delete, ao invés de deletar o usuários nós apenas desativamos.</remarks>
+        ///<response code="200"> Atualiza com sucesso o status para ativado/desativado </response>
+        [HttpPatch("{id}", Name = "StatusPet")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
+        [Authorize]
+        public IActionResult UpdateStatusPet(string id)
+        {
+        var result = _service.UpdateStatusPet((Convert.ToInt32(id)));
+        if (result.ErrorMessage == null)
+        {
+            return StatusCode(200, result);
+        } else
+        {
+            return StatusCode(404, result);
+        }
+        }
     }
+

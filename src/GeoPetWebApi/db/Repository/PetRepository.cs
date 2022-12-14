@@ -89,11 +89,12 @@ namespace projetoFinal.db.Repository
         public int UpdateStatus(int id) {
             var pet = GetById(id);
 
-            if (pet == null) return 0;
+            if (pet == null) return -1;
 
             pet!.Status = !pet.Status;
 
-            return _context.SaveChanges();
+            _context.SaveChanges();
+            return 1; 
         }
     }
 

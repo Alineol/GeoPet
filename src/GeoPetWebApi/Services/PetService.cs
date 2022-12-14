@@ -95,15 +95,18 @@ namespace projetoFinal.Services
             var output = new ResultRowstOuput();
 
             var newStatus = _repository.UpdateStatus(id);
+            if (newStatus == -1)
+            {
+                output.ErrorMessage = "Pet não encontrado";
+            } else
+            {
+                output.RowsAffected = newStatus;
+                var pet = _repository.GetById(id);
 
-            output.RowsAffected = newStatus;
+                if (pet!.Status) output.SucessMessage = "Pet ativado.";
 
-            var pet = _repository.GetById(id);
-
-            if (pet!.Status) output.SucessMessage = "Pet ativado.";
-            
-            else output.SucessMessage = "Pet inativado.";
-
+                else output.SucessMessage = "Pet inativado.";
+            }
             return output;
         }
 
