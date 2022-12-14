@@ -35,7 +35,6 @@ builder.Services.AddSwaggerGen(options => {
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer",
-        //BearerFormat = "JWT",
         Description = @"JWT Authorization header using the Bearer scheme.
                    \r\n\r\n Enter 'Bearer'[space] and then your token in the text input below.
                     \r\n\r\nExample: \""Bearer 12345abcdef\""",

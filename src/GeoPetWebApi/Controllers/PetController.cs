@@ -48,7 +48,7 @@ namespace projetoFinal.Controllers;
             return StatusCode(200, pets);
         }
 
-        ///<summary>Rota para buscar um pet pelo id</summary>
+        ///<summary>Rota para buscar um pet pelo id e retorna um QrCode com os dados do pet e do dono.</summary>
         ///<response code="200"> Retorna um Qrcode com dados do pet </response>
         ///<response code="404">retorna um objeto com uma mensagem de erro </response>
         [HttpGet("{id}", Name = "GetById")]

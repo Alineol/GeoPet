@@ -14,7 +14,8 @@ namespace GeoPetWebApi.Controllers {
             _logger = logger;
             _service = service;
         }
-        ///<summary>Rota para fazer login de usuário</summary>
+        ///<summary>Rota para fazer login de usuário e retornar o token</summary>
+        ///<remarks>Não precisa de autorização</remarks>
         ///<response code="200"> retorna o token gerado</response>
         ///<response code="401">retorna um objeto com uma mensagem de erro </response>
         [HttpPost(Name = "Login")]

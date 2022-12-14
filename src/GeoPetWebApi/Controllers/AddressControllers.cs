@@ -1,4 +1,5 @@
 using GeoPetWebApi.Controllers.inputs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using projetoFinal.Controllers;
 using projetoFinal.Services;
@@ -15,19 +16,21 @@ namespace GeoPetWebApi.Controllers {
             _service = service;
         }
 
-        ///<summary>Cria Pessoas Cuidadoras</summary>
+        ///<summary>Rota que retorna a localização a partir de uma lat e long</summary>
+        ///<remarks>Não precisa de autorização</remarks>
         ///<response code="200"> retorna um endereço</response>
         ///<response code="400"> retorna um objeto com uma mensagem de erro</response>
-    [HttpPost(Name = "getAddress")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput) )]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
-    public async Task<IActionResult> GetAddress([FromBody]AddressInput input)
-    {
-        var result = await _service.GetAddressByLat(input);
-        if(result.error == null)
-        return StatusCode(200, result.display_name);
-        return StatusCode(400, result.error);
+        [HttpPost(Name = "getAddress")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
 
-    }
+        public async Task<IActionResult> GetAddress([FromBody] AddressInput input)
+        {
+            var result = await _service.GetAddressByLat(input);
+            if (result.error == null)
+                return StatusCode(200, result.display_name);
+            return StatusCode(400, result.error);
+
+        }
     }
 }
