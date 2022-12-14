@@ -1,6 +1,6 @@
 Para rodar a aplicação: 
 
-1- Entre na pasta GeoPetWebApi e rode o comando 'docker-compose up -d' para levantar o bando de dados;
+1- Entre na pasta src/GeoPetWebApi e rode o comando 'docker-compose up -d' para levantar o bando de dados;
 
 2- Em seguida dê o comando 'dotnet run', se estiver usando o vscode, ou rode a aplicação pelo visualStudio.
 
