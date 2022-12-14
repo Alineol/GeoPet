@@ -1,3 +1,11 @@
+Estrutura do projeto:
+- GeoPetWebApi
+  - Controllers
+  - Services
+  - DB   
+- Test
+  - Unit 
+
 Para rodar a aplicação: 
 
 1- Entre na pasta src/GeoPetWebApi e rode o comando 'docker-compose up -d' para levantar o banco de dados;
