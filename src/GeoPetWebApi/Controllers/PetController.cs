@@ -102,4 +102,21 @@ namespace projetoFinal.Controllers;
             }
             return StatusCode(400,result);
         }
+        
+        ///<summary>Atualiza status do pet</summary>
+        ///<response code="200"> Atualiza com sucesso o status para ativado/desativado </response>
+        [HttpPatch(Name = "StatusPet")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultRowstOuput))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultRowstOuput))]
+        [Authorize]
+        public IActionResult UpdateStatusPet(int id)
+        {
+          if(!_service.GetById(id) return StatusCode(400, new ResultRowstOuput() {
+            ErrorMessage = "Pet não encontrado",
+        });
+
+          var result = _service.UpdateStatusPet(id);
+
+          return StatusCode(200, result);
+        }
     }
