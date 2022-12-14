@@ -1,10 +1,28 @@
+GeoPet é uma API para cadastro de pets e cuidadores. Conectamos pets e cuidadores.
+
+Estrutura do projeto:
+- GeoPetWebApi
+  - Controllers
+  - Services
+  - DB   
+- Test
+  - Unit 
+
+Tecnologias utilizadas:
+  - FluentAssertion
+  - AutoFixture
+  - Moq
+  - AspNetCore
+  - EntityFrameworkCore
+  - Xunit
+
 Para rodar a aplicação: 
 
 1- Entre na pasta src/GeoPetWebApi e rode o comando 'docker-compose up -d' para levantar o banco de dados;
 
 2- Em seguida dê o comando 'dotnet run', se estiver usando o vscode, ou rode a aplicação pelo visualStudio.
 
-
+3 - No log da aplicação aparecerá as rotas que estarão disponíveis, clique na que começa com https e será direcionado ao navegador adiciona /swagger/index.html para ser direcionado para o swagger do projeto e testá-lo.
 
 
 
