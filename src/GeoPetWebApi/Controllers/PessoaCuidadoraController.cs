@@ -98,13 +98,4 @@ public class PessoaCuidadoraController : ControllerBase
 
         return StatusCode(200, result);
     }
-
-    // User.Claim precisa ficar na controlar porque vem da controllerBase
-    /* public bool VerifyClaimsEmailAndSenha(string email, string senha)
-    {
-        var emailAutorizado = User.Claims.Where(em => em.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
-        var senhaAutorizada = User.Claims.Where(s => s.Type == "senha").FirstOrDefault()?.Value;
-
-        return email == emailAutorizado && senha == senhaAutorizada;
-    } */
 }
