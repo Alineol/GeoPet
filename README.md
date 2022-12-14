@@ -1,3 +1,5 @@
+GeoPet é uma API para cadastro de pets e cuidadores. Conectamos pets e cuidadores.
+
 Estrutura do projeto:
 - GeoPetWebApi
   - Controllers
@@ -5,6 +7,14 @@ Estrutura do projeto:
   - DB   
 - Test
   - Unit 
+
+Tecnologias utilizadas:
+  - FluentAssertion
+  - AutoFixture
+  - Moq
+  - AspNetCore
+  - EntityFrameworkCore
+  - Xunit
 
 Para rodar a aplicação: 
 
