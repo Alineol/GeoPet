@@ -79,7 +79,6 @@ namespace projetoFinal.db.Repository
             pet.Peso = dados.Peso;
             pet.Idade = dados.Idade;
             pet.Raca = dados.Raca;
-            // pet.Status = false;
             pet.Porte = dados.Porte;
             pet.HashLocalizacao = dados.HashLocalizacao;
             pet.PessoaCuidadora = pessoaCuidadora;
@@ -92,7 +91,7 @@ namespace projetoFinal.db.Repository
 
             if (pet == null) return 0;
 
-            pet.Status = false;
+            pet.Status = !pet.Status;
 
             return _context.SaveChanges();
         }
