@@ -31,8 +31,8 @@ public class PatchStatusServiceTest
         await _servicePessoa.CreatePessoaCuidadora(cuidadores[1]);
         await _servicePessoa.CreatePessoaCuidadora(cuidadores[2]);
 
-        /* var teste = _servicePessoa.UpdateStatusPessoaCuidadora(cuidadores[0].Email);
-        teste.SucessMessage.Should().Be("Pessoa cuidadora desativada."); */
+        var teste = _servicePessoa.UpdateStatusPessoaCuidadora(cuidadores[0].Email);
+        teste.SucessMessage.Should().Be("Pessoa cuidadora desativada.");
 
         _service.CreatePet(pets[0]);
         _service.CreatePet(pets[1]);
@@ -42,8 +42,7 @@ public class PatchStatusServiceTest
         
         result.ErrorMessage.Should().BeNull();
         result.SucessMessage.Should().NotBeNull();
-        // result.SucessMessage.Should().Be("Pet inativado.");
-        // Descobrir por que não está salvando.
+        result.SucessMessage.Should().Be("Pet inativado.");
 
         result = _service.UpdateStatusPet(ID);
 
