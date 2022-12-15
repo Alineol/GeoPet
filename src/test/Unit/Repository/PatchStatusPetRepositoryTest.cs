@@ -44,7 +44,7 @@ public class PatchStatusPetRepositoryTest
         _repository.UpdateStatus(ID);
 
         status = _repository.GetById(ID);
-        //status.Status.Should().BeFalse();
+        // status.Status.Should().BeFalse();
     }
 }
 
