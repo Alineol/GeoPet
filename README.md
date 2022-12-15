@@ -49,7 +49,7 @@ GeoPet é uma API para cadastro de pets e cuidadores. Conectamos pets e cuidador
 <Details>
 <summary><b>Documentação</b></summary>
 A Documentação foi feita pelo swagger, para acessar  rode o projeto localmente e acesse a página: <link>https://localhost:7170/swagger/index.html</link> 
-obs: no exemplo acima a aplicação está rodando na porta 7170, você conseue vizualizar essa informação nos logs da aplicação
+obs: no exemplo acima a aplicação está rodando na porta 7170, você consegue vizualizar essa informação nos logs da aplicação
 </Details>
 
 
