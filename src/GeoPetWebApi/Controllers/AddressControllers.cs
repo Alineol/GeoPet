@@ -15,7 +15,7 @@ namespace GeoPetWebApi.Controllers {
             _service = service;
         }
 
-        ///<summary>Cria Pessoas Cuidadoras</summary>
+        ///<summary>Retorna um endereço</summary>
         ///<response code="200"> retorna um endereço</response>
         ///<response code="400"> retorna um objeto com uma mensagem de erro</response>
     [HttpPost(Name = "getAddress")]

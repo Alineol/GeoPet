@@ -111,7 +111,7 @@ namespace projetoFinal.Controllers;
         [Authorize]
         public IActionResult UpdateStatusPet(int id)
         {
-          if(!_service.GetById(id) return StatusCode(400, new ResultRowstOuput() {
+          if(_service.GetById(id) == null) return StatusCode(400, new ResultRowstOuput(){
             ErrorMessage = "Pet não encontrado",
         });
 

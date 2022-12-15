@@ -79,6 +79,7 @@ namespace projetoFinal.db.Repository
             pet.Peso = dados.Peso;
             pet.Idade = dados.Idade;
             pet.Raca = dados.Raca;
+            // pet.Status = false;
             pet.Porte = dados.Porte;
             pet.HashLocalizacao = dados.HashLocalizacao;
             pet.PessoaCuidadora = pessoaCuidadora;
@@ -87,11 +88,11 @@ namespace projetoFinal.db.Repository
         }
 
         public int UpdateStatus(int id) {
-            var pet = GetById(id);
+            var pet = _context.Pets.Where(p => p.Id == id).FirstOrDefault();
 
             if (pet == null) return 0;
 
-            pet!.Status = !pet.Status;
+            pet.Status = false;
 
             return _context.SaveChanges();
         }

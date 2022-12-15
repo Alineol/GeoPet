@@ -100,7 +100,7 @@ namespace projetoFinal.Services
 
             var pet = _repository.GetById(id);
 
-            if (pet!.Status) output.SucessMessage = "Pet ativado.";
+            if (pet.Status) output.SucessMessage = "Pet ativado.";
             
             else output.SucessMessage = "Pet inativado.";
 
