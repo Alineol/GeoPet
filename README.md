@@ -1,32 +1,53 @@
+<h1>GeoPetWebApi</h1>
 GeoPet é uma API para cadastro de pets e cuidadores. Conectamos pets e cuidadores.
 
-Estrutura do projeto:
+<Details>
+<summary><b>Estrutura do projeto:</b></summary>
+
 - GeoPetWebApi
   - Controllers
+    - inputs
   - Services
   - DB
     - repository
     - models
-    
+  - jwt  
 - Test
-  - Unit 
+  - Unit
+    - controller
+    - service
+    - repository 
+</Details>
 
-Tecnologias utilizadas:
+<Details>
+<summary><b>Tecnologias utilizadas:</b></summary>
+
   - FluentAssertion
   - AutoFixture
   - Moq
   - AspNetCore
   - EntityFrameworkCore
   - Xunit
-  -QrCoder
+  - QrCoder
+</Details>
 
-Para rodar a aplicação: 
+<Details>
+<summary><b>Para rodar a aplicação: </b></summary>
 
-1- Entre na pasta src/GeoPetWebApi e rode o comando 'docker-compose up -d' para levantar o banco de dados;
+1- Entre na pasta src/GeoPetWebApi e rode o comando '<b>docker-compose up -d</b>' para levantar o banco de dados(é necessário ter  docker instalado);
 
-2- Em seguida dê o comando 'dotnet run', se estiver usando o vscode, ou rode a aplicação pelo visualStudio.
+2- Em seguida dê o comando '<b>dotnet run</b>', se estiver usando o vscode, ou rode a aplicação pelo visualStudio.
+</Details>
 
-3 - No log da aplicação aparecerá as rotas que estarão disponíveis, clique na que começa com https e será direcionado ao navegador adiciona /swagger/index.html para ser direcionado para o swagger do projeto e testá-lo.
+
+<Details>
+<summary><b>Documentação</b></summary>
+A Documentação foi feita pelo swagger, para acessar  rode o projeto localmente e acesse a página: <link>https://localhost:7170/swagger/index.html</link> 
+obs: no exemplo acima a aplicação está rodando na porta 7170, você conseue vizualizar essa informação nos logs da aplicação
+</Details>
+
+
+
 
 
 
