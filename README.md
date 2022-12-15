@@ -4,7 +4,10 @@ Estrutura do projeto:
 - GeoPetWebApi
   - Controllers
   - Services
-  - DB   
+  - DB
+    - repository
+    - models
+    
 - Test
   - Unit 
 
@@ -15,6 +18,7 @@ Tecnologias utilizadas:
   - AspNetCore
   - EntityFrameworkCore
   - Xunit
+  -QrCoder
 
 Para rodar a aplicação: 
 
